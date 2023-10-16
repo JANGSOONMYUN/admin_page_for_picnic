@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload and Modify</title>
+    <script>
+        function loadValue() {
+            fetch('/load_post_text')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("post_text_label").innerText = data.value;
+            });
+        }
+    </script>
+</head>
+<body>
+
+<h3>csv 파일 올리기</h3>
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file">
+    <input type="submit" value="Upload">
+</form>
+
+<!-- Add the download button below -->
+<h3>현재 등록된 csv 파일 받기</h3>
+<form action="/download" method="GET">
+    <button type="submit">Download csv file</button>
+</form>
+
+<h3>post_text 수정</h3>
+<form action="/modify_post_text" method="POST">
+    <input type="text" name="post_text" placeholder="Enter new post_text">
+    <input type="submit" value="Modify">
+</form>
+
+<h3>post_text 확인</h3>
+<button onclick="loadValue()">Load Value</button>
+<div id="post_text_label"></div>
+
+
+
+</body>
+</html>
