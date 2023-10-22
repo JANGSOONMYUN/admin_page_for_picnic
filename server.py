@@ -3,7 +3,7 @@ from flask import send_from_directory
 import os
 
 from get_config import get_ip_port, get_upload_dir_path
-from manage_picnic import get_picnic_config, set_post_text, get_post_text
+from manage_picnic import get_picnic_config, set_post_text, get_post_text, set_pre_text, get_pre_text
 
 app = Flask(__name__)
 UPLOAD_FOLDER = './'
@@ -50,6 +50,23 @@ def load_post_text():
     filename = os.path.join(UPLOAD_FOLDER, char_setting_name)
     post_text = get_post_text(filename)
     return {"value": post_text}
+
+@app.route('/modify_pre_text', methods=['POST'])
+def modify_pre_text():
+    pre_text = request.form.get('pre_text')
+    # You can process the variable_value here
+    print("Modified variable:", pre_text)
+    
+    filename = os.path.join(UPLOAD_FOLDER, char_setting_name)
+    set_pre_text(pre_text, filename)
+    return redirect(url_for('index'))
+
+@app.route('/load_pre_text')
+def load_pre_text():
+    filename = os.path.join(UPLOAD_FOLDER, char_setting_name)
+    pre_text = get_pre_text(filename)
+    return {"value": pre_text}
+
 
 if __name__ == '__main__':
     ip, port = get_ip_port('config.json')

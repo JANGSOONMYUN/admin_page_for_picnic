@@ -3,6 +3,13 @@
 <head>
     <title>Upload and Modify</title>
     <script>
+        function loadPreText() {
+            fetch('/load_pre_text')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("pre_text_label").innerText = data.value;
+            });
+        }
         function loadValue() {
             fetch('/load_post_text')
             .then(response => response.json())
@@ -26,9 +33,23 @@
     <button type="submit">Download csv file</button>
 </form>
 
+<hr>
+
+<h3>pre_text 수정</h3>
+<form action="/modify_pre_text" method="POST">
+    <input type="text" name="pre_text" placeholder="앞 부분의 추가 문장." style="width: 500px;">
+    <input type="submit" value="Modify">
+</form>
+
+<h3>post_text 확인</h3>
+<button onclick="loadPreText()">Load Value</button>
+<div id="pre_text_label"></div>
+
+<hr>
+
 <h3>post_text 수정</h3>
 <form action="/modify_post_text" method="POST">
-    <input type="text" name="post_text" placeholder="Enter new post_text">
+    <input type="text" name="post_text" placeholder="뒷 부분의 추가 문장." style="width: 500px;">
     <input type="submit" value="Modify">
 </form>
 
